@@ -1,0 +1,84 @@
+{
+    "img":[
+        {
+            "name": "child_horo",
+            "id": 1,
+            "src": "assets/img/1_img.png",
+            "width": 250,
+            "heigth": 200,
+            "pos_x": -450,
+            "pos_y": 120,
+            "pos_z": 300
+        },
+        {
+            "name": "horoscope",
+            "id": 2,
+            "src": "assets/img/2_img.png",
+            "width": 150,
+            "heigth": 150,
+            "pos_x": -220,
+            "pos_y": 200,
+            "pos_z": 500
+        },
+        {
+            "name": "relationship",
+            "id": 3,
+            "src": "assets/img/3_img.png",
+            "width": 200,
+            "heigth": 130,
+            "pos_x": 300,
+            "pos_y": 300,
+            "pos_z": 280
+        },
+        {
+            "name": "magick",
+            "id": 4,
+            "src": "assets/img/4_img.png",
+            "width": 200,
+            "heigth": 150,
+            "pos_x": 400,
+            "pos_y": 180,
+            "pos_z": 500
+        },
+        {
+            "name": "book",
+            "id": 5,
+            "src": "assets/img/5_img.png",
+            "width": 250,
+            "heigth": 250,
+            "pos_x": 550,
+            "pos_y": -120,
+            "pos_z": 300
+        },
+        {
+            "name": "business",
+            "id": 6,
+            "src": "assets/img/6_img.png",
+            "width": 200,
+            "heigth": 150,
+            "pos_x": 250,
+            "pos_y": -250,
+            "pos_z": 400
+        },
+        {
+            "name": "magick-2",
+            "id": 7,
+            "src": "assets/img/7_img.png",
+            "width": 300,
+            "heigth": 200,
+            "pos_x": -120,
+            "pos_y": -300,
+            "pos_z": 250
+        },
+        {
+            "name": "magick-3",
+            "id": 8,
+            "src": "assets/img/8_img.png",
+            "width": 300,
+            "heigth": 300,
+            "pos_x": -500,
+            "pos_y": -180,
+            "pos_z": 180
+        }
+    ]
+}

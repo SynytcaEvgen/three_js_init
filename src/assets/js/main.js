@@ -1,5 +1,6 @@
 
 import * as THREE from 'three';
+import {getData} from './services/services'
 
 window.addEventListener('DOMContentLoaded', init);
 
@@ -19,17 +20,16 @@ function init() {
     function run() {
         container = document.querySelector('.three_js');
         camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 100000 );
-        camera.position.z = 3200;
+        camera.position.z = 1000;
         scene = new THREE.Scene();
-		const texture = new THREE.TextureLoader().load( 'assets/img/bg_img.png' );
-		const texture_1 = new THREE.TextureLoader().load( 'assets/img/child_horo.png' );
+        const texture = new THREE.TextureLoader().load('assets/img/bg_img.png');
+        texture.minFilter = THREE.LinearFilter;
         scene.background = texture;
 
-        const geometry = new THREE.PlaneGeometry( 500, 800 );
-        // const material = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide });
-        const material = new THREE.MeshBasicMaterial({ map : texture_1 });
-        const plane = new THREE.Mesh( geometry, material );
-        scene.add( plane );
+
+        getData('assets/img_db.json')
+            .then(data => createPlane(data));
+       
 
         renderer = new THREE.WebGLRenderer();
 		renderer.setPixelRatio( window.devicePixelRatio );
@@ -37,7 +37,8 @@ function init() {
         container.appendChild(renderer.domElement);
         
         window.addEventListener( 'load', ()=> onWindowResize(texture) );
-		window.addEventListener( 'resize', ()=> onWindowResize(texture) );
+        window.addEventListener('resize', () => onWindowResize(texture));
+        
     };
 	function onWindowResize(bgTexture) {
           const canvasAspect = container.clientWidth / container.clientHeight;
@@ -53,10 +54,26 @@ function init() {
 
           bgTexture.offset.y = aspect > 1 ? 0 : (1 - aspect) / 2;
           bgTexture.repeat.y = aspect > 1 ? 1 : aspect;
-	}
-	function onDocumentMouseMove( event ) {
-		mouseX = ( event.clientX - windowHalfX ) * 2;
-		mouseY = ( event.clientY - windowHalfY ) * 2;
+    }
+    function createPlane(data) {
+        for (let i = 0; i < data.img.length; i++) {
+            const texture_pic = new THREE.TextureLoader().load(data.img[i].src);
+            texture_pic.minFilter = THREE.LinearFilter;
+            const geometry = new THREE.PlaneGeometry(data.img[i].width, data.img[i].heigth);
+            const material = new THREE.MeshBasicMaterial({ map : texture_pic });
+            const plane = new THREE.Mesh(geometry, material);
+            plane.position.x = data.img[i].pos_x;
+            plane.position.y = data.img[i].pos_y;
+            plane.position.z = data.img[i].pos_z;
+            scene.add( plane );
+        };
+        
+    }
+    function onDocumentMouseMove(event) {
+        const  mouseTolerance = 0.03;
+		mouseX = (event.clientX - windowHalfX) * mouseTolerance;
+        mouseY = (event.clientY - windowHalfY) * mouseTolerance;
+        
 	}
 	//
 	function animate() {
@@ -64,9 +81,10 @@ function init() {
 		render();
 	}
 	function render() {
-		camera.position.x += ( mouseX - camera.position.x ) * .05;
-		camera.position.y += ( - mouseY - camera.position.y ) * .05;
-		camera.lookAt( scene.position );
+		camera.position.x = mouseX;
+        camera.position.y = -mouseY;
+        
+		// camera.lookAt( scene.position );
 		renderer.render( scene, camera );
 	}
 }
